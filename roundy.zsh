@@ -121,13 +121,14 @@ roundy_get_dir() {
 #
 
 roundy_prompt_left() {
-  local p
+  local p=" "
   local char_open=$'\ue0b6'
   local char_close=$'\ue0b4'
+  local exit_color="%(?|${ROUNDY_COLORS_BG_EXITSTATUS_OK}|${ROUNDY_COLORS_BG_EXITSTATUS_NO})"
 
-  p+="%F{${ROUNDY_COLORS_BG_EXITSTATUS}}"
+  p+="%F{${exit_color}}"
   p+="${char_open}"
-  p+="%K{${ROUNDY_COLORS_BG_EXITSTATUS}}"
+  p+="%K{${exit_color}}"
   p+="%F{${ROUNDY_COLORS_FG_EXITSTATUS}}"
   p+="%{%(?|${ROUNDY_EXITSTATUS_GOOD}|${ROUNDY_EXITSTATUS_BAD})%2G%}"
   if [ -n "${Roundy[data_texc]}" ]; then
@@ -135,7 +136,7 @@ roundy_prompt_left() {
   else
     p+="%K{${ROUNDY_COLORS_BG_USER}}"
   fi
-  p+="%F{${ROUNDY_COLORS_BG_EXITSTATUS}}"
+  p+="%F{${exit_color}}"
   p+="${char_close}"
 
   if [ -n "${Roundy[data_texc]}" ]; then
