@@ -240,11 +240,11 @@ roundy_preexec() {
 roundy_precmd() {
   Roundy[data_texc]=$(roundy_get_texc)
   # Check for async worker availability, otherwise fallback to primitive-way
-  # if zpty -t roundyworker &>/dev/null; then
-    # async_job roundyworker roundy_get_gitinfo "$PWD"
-  # else
+  if zpty -t roundyworker &>/dev/null; then
+    async_job roundyworker roundy_get_gitinfo "$PWD"
+  else
     Roundy[data_gitinfo]=$(roundy_get_gitinfo "$PWD")
-  # fi
+  fi
 
   roundy_draw_gap
   roundy_draw_prompts
