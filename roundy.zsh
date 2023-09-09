@@ -15,8 +15,8 @@ Roundy[root]=${0:A:h}
 : ${ROUNDY_COLORS_FG_EXITSTATUS:=0}
 : ${ROUNDY_COLORS_BG_EXITSTATUS:=4}
 # Icon definition for Command's Exit Status
-: ${ROUNDY_EXITSTATUS_GOOD:=$'\uf058 '}
-: ${ROUNDY_EXITSTATUS_BAD:=$'\uf057 '}
+: ${ROUNDY_EXITSTATUS_OK:=$'\uf058 '}
+: ${ROUNDY_EXITSTATUS_NO:=$'\uf057 '}
 
 # Options and Color definition for Time Execution Command
 : ${ROUNDY_COLORS_FG_TEXC:=0}
@@ -130,7 +130,7 @@ roundy_prompt_left() {
   p+="${char_open}"
   p+="%K{${exit_color}}"
   p+="%F{${ROUNDY_COLORS_FG_EXITSTATUS}}"
-  p+="%{%(?|${ROUNDY_EXITSTATUS_GOOD}|${ROUNDY_EXITSTATUS_BAD})%2G%}"
+  p+="%{%(?|${ROUNDY_EXITSTATUS_OK}|${ROUNDY_EXITSTATUS_NO})%2G%}"
   if [ -n "${Roundy[data_texc]}" ]; then
     p+="%K{${ROUNDY_COLORS_BG_TEXC}}"
   else
@@ -240,11 +240,11 @@ roundy_preexec() {
 roundy_precmd() {
   Roundy[data_texc]=$(roundy_get_texc)
   # Check for async worker availability, otherwise fallback to primitive-way
-  if zpty -t roundyworker &>/dev/null; then
-    async_job roundyworker roundy_get_gitinfo "$PWD"
-  else
+  # if zpty -t roundyworker &>/dev/null; then
+    # async_job roundyworker roundy_get_gitinfo "$PWD"
+  # else
     Roundy[data_gitinfo]=$(roundy_get_gitinfo "$PWD")
-  fi
+  # fi
 
   roundy_draw_gap
   roundy_draw_prompts
@@ -317,8 +317,10 @@ roundy_plugin_unload() {
     ROUNDY_COLORS_FG_GITINFO \
     ROUNDY_COLORS_FG_TEXC \
     ROUNDY_COLORS_FG_USER \
-    ROUNDY_EXITSTATUS_BAD \
-    ROUNDY_EXITSTATUS_GOOD \
+    ROUNDY_EXITSTATUS_NO \
+    ROUNDY_EXITSTATUS_OK \
+    ROUNDY_COLORS_BG_EXITSTATUS_OK \
+    ROUNDY_COLORS_BG_EXITSTATUS_NO \
     ROUNDY_EXITSTATUS_ICONFIX \
     ROUNDY_PROMPT_HAS_GAP \
     ROUNDY_TEXC_MIN_MS \
