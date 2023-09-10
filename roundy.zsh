@@ -203,33 +203,6 @@ roundy_draw_gap() {
   [[ $ROUNDY_PROMPT_HAS_GAP == true ]] && Roundy[draw_gap]=1
 }
 
-#
-# Initialize async
-#
-roundy_async_init() {
-  # Load async library
-  async_init 2>/dev/null || {
-    source "${Roundy[root]}/lib/async.zsh"
-    async_init
-  }
-
-  # Setup worker and callback
-  async_start_worker roundyworker -n
-  async_worker_eval roundyworker builtin cd -q $PWD
-  async_register_callback roundyworker roundy_async_callback
-}
-
-#
-# Callback functions for async worker
-#
-roundy_async_callback() {
-  # Set output ($3) callback based on method name ($1)
-  Roundy[data_${1/roundy_get_/}]=$3
-
-  # we needs to redraw the whole prompts :(
-  roundy_draw_prompts
-  zle && zle reset-prompt
-}
 
 roundy_preexec() {
   # disable gap when clearing term
@@ -241,12 +214,7 @@ roundy_preexec() {
 
 roundy_precmd() {
   Roundy[data_texc]=$(roundy_get_texc)
-  # Check for async worker availability, otherwise fallback to primitive-way
-  if zpty -t roundyworker &>/dev/null; then
-    async_job roundyworker roundy_get_gitinfo "$PWD"
-  else
-    Roundy[data_gitinfo]=$(roundy_get_gitinfo "$PWD")
-  fi
+  Roundy[data_gitinfo]=$(roundy_get_gitinfo "$PWD")
 
   roundy_draw_gap
   roundy_draw_prompts
@@ -272,9 +240,6 @@ roundy_main() {
   # Needed for showing command time execution
   (( $+EPOCHSECONDS )) || zmodload zsh/datetime
 
-  # Setup Async
-  roundy_async_init
-
   # Setup hooks
   add-zsh-hook preexec roundy_preexec
   add-zsh-hook precmd roundy_precmd
@@ -295,8 +260,6 @@ roundy_plugin_unload() {
   add-zsh-hook -D precmd roundy_precmd
 
   unfunction \
-    roundy_async_init \
-    roundy_async_callback \
     roundy_draw_gap \
     roundy_draw_prompts \
     roundy_prompt_left \
