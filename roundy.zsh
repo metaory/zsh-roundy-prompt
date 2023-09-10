@@ -130,7 +130,7 @@ roundy_prompt_left() {
   p+="${char_open}"
   p+="%K{${exit_color}}"
   p+="%F{${ROUNDY_COLORS_FG_EXITSTATUS}}"
-  p+="%{%(?|${ROUNDY_EXITSTATUS_OK}|${ROUNDY_EXITSTATUS_NO})%2G%}"
+  p+="%{%(?|${ROUNDY_EXITSTATUS_OK}|${ROUNDY_EXITSTATUS_NO})2G%}"
   if [ -n "${Roundy[data_texc]}" ]; then
     p+="%K{${ROUNDY_COLORS_BG_TEXC}}"
   else
@@ -332,3 +332,4 @@ roundy_plugin_unload() {
 }
 
 roundy_main "$@"
+
