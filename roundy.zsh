@@ -23,6 +23,8 @@ Roundy[root]=${0:A:h}
 : ${ROUNDY_COLORS_BG_TEXC:=2}
 # Minimal time (in ms) for the Time Execution of Command is displayed in prompt
 : ${ROUNDY_TEXC_MIN_MS:=5}
+# Icon for the Time Execution of Command is displayed in prompt
+: ${ROUNDY_TEXC_ICON:="ﮫ"}
 
 # Color definition for Active user name
 : ${ROUNDY_COLORS_FG_USER:=7}
@@ -85,7 +87,7 @@ roundy_get_texc() {
     (( m )) && moment+="${m}m"
     moment+="${s}s"
 
-    printf -- '%s' " $moment "
+    printf -- '%s' " ${ROUNDY_TEXC_ICON} ${moment} "
   fi
 }
 
