@@ -134,7 +134,7 @@ roundy_prompt_left() {
   if [ -n "${Roundy[data_texc]}" ]; then
     p+="%K{${ROUNDY_COLORS_BG_TEXC}}"
   else
-    p+="%K{${ROUNDY_COLORS_BG_USER}}"
+    p+="%K{${ROUNDY_COLORS_BG_DIR}}"
   fi
   p+="%F{${exit_color}}"
   p+="${char_close}"
@@ -143,16 +143,16 @@ roundy_prompt_left() {
     p+="%K{${ROUNDY_COLORS_BG_TEXC}}"
     p+="%F{${ROUNDY_COLORS_FG_TEXC}}"
     p+="${Roundy[data_texc]}"
-    p+="%K{${ROUNDY_COLORS_BG_USER}}"
+    p+="%K{${ROUNDY_COLORS_BG_DIR}}"
     p+="%F{${ROUNDY_COLORS_BG_TEXC}}"
     p+="${char_close}"
   fi
 
-  p+="%K{${ROUNDY_COLORS_BG_USER}}"
-  p+="%F{${ROUNDY_COLORS_FG_USER}}"
-  p+="%(#.${ROUNDY_USER_CONTENT_ROOT}.${ROUNDY_USER_CONTENT_NORMAL})"
+  p+="%K{${ROUNDY_COLORS_BG_DIR}}"
+  p+="%F{${ROUNDY_COLORS_FG_DIR}}"
+  p+="${Roundy[data_dir]}"
   p+="%k"
-  p+="%F{${ROUNDY_COLORS_BG_USER}}"
+  p+="%F{${ROUNDY_COLORS_BG_DIR}}"
   p+="${char_close}"
   p+="%f "
 
@@ -165,14 +165,16 @@ roundy_prompt_right() {
   local char_open=$'\ue0b6'
   local char_close=$'\ue0b4'
 
-  p+="%F{${ROUNDY_COLORS_BG_DIR}}"
+
+  p+="%F{${ROUNDY_COLORS_BG_USER}}"
   p+="${char_open}"
-  p+="%K{${ROUNDY_COLORS_BG_DIR}}"
-  p+="%F{${ROUNDY_COLORS_FG_DIR}}"
-  p+="${Roundy[data_dir]}"
-  cl_close=${ROUNDY_COLORS_BG_DIR}
+  p+="%K{${ROUNDY_COLORS_BG_USER}}"
+  p+="%F{${ROUNDY_COLORS_FG_USER}}"
+  p+="%(#.${ROUNDY_USER_CONTENT_ROOT}.${ROUNDY_USER_CONTENT_NORMAL})"
+  cl_close=${ROUNDY_COLORS_BG_USER}
+
   if [[ -n "${Roundy[data_gitinfo]}" ]]; then
-    p+="%K{${ROUNDY_COLORS_BG_DIR}}"
+    p+="%K{${ROUNDY_COLORS_BG_USER}}"
     p+="%F{${ROUNDY_COLORS_BG_GITINFO}}"
     p+="${char_open}"
     p+="%K{${ROUNDY_COLORS_BG_GITINFO}}"
