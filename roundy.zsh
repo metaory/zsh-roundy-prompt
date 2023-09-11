@@ -27,11 +27,11 @@ Roundy[root]=${0:A:h}
 : ${ROUNDY_TEXC_ICON:="ﮫ"}
 
 # Color definition for Active user name
-: ${ROUNDY_COLORS_FG_USER:=7}
-: ${ROUNDY_COLORS_BG_USER:=0}
+: ${ROUNDY_COLORS_FG_USR:=7}
+: ${ROUNDY_COLORS_BG_USR:=0}
 # Options to override username info
-: ${ROUNDY_USER_CONTENT_NORMAL:=" %n "}
-: ${ROUNDY_USER_CONTENT_ROOT:=" %n "}
+: ${ROUNDY_USR_CONTENT_NORMAL:=" %n "}
+: ${ROUNDY_USR_CONTENT_ROOT:=" %n "}
 
 # Color definition for Active directory name
 : ${ROUNDY_COLORS_FG_DIR:=4}
@@ -167,16 +167,15 @@ roundy_prompt_right() {
   local char_open=$'\ue0b6'
   local char_close=$'\ue0b4'
 
-
-  p+="%F{${ROUNDY_COLORS_BG_USER}}"
+  p+="%F{${ROUNDY_COLORS_BG_USR}}"
   p+="${char_open}"
-  p+="%K{${ROUNDY_COLORS_BG_USER}}"
-  p+="%F{${ROUNDY_COLORS_FG_USER}}"
-  p+="%(#.${ROUNDY_USER_CONTENT_ROOT}.${ROUNDY_USER_CONTENT_NORMAL})"
-  cl_close=${ROUNDY_COLORS_BG_USER}
+  p+="%K{${ROUNDY_COLORS_BG_USR}}"
+  p+="%F{${ROUNDY_COLORS_FG_USR}}"
+  p+="%(#.${ROUNDY_USR_CONTENT_ROOT}.${ROUNDY_USR_CONTENT_NORMAL})"
+  cl_close=${ROUNDY_COLORS_BG_USR}
 
   if [[ -n "${Roundy[data_gitinfo]}" ]]; then
-    p+="%K{${ROUNDY_COLORS_BG_USER}}"
+    p+="%K{${ROUNDY_COLORS_BG_USR}}"
     p+="%F{${ROUNDY_COLORS_BG_GITINFO}}"
     p+="${char_open}"
     p+="%K{${ROUNDY_COLORS_BG_GITINFO}}"
@@ -278,12 +277,12 @@ roundy_plugin_unload() {
     ROUNDY_COLORS_BG_EXITSTATUS \
     ROUNDY_COLORS_BG_GITINFO \
     ROUNDY_COLORS_BG_TEXC \
-    ROUNDY_COLORS_BG_USER \
+    ROUNDY_COLORS_BG_USR \
     ROUNDY_COLORS_FG_DIR \
     ROUNDY_COLORS_FG_EXITSTATUS \
     ROUNDY_COLORS_FG_GITINFO \
     ROUNDY_COLORS_FG_TEXC \
-    ROUNDY_COLORS_FG_USER \
+    ROUNDY_COLORS_FG_USR \
     ROUNDY_EXITSTATUS_NO \
     ROUNDY_EXITSTATUS_OK \
     ROUNDY_COLORS_BG_EXITSTATUS_OK \
@@ -291,8 +290,8 @@ roundy_plugin_unload() {
     ROUNDY_EXITSTATUS_ICONFIX \
     ROUNDY_PROMPT_HAS_GAP \
     ROUNDY_TEXC_MIN_MS \
-    ROUNDY_USER_CONTENT_NORMAL \
-    ROUNDY_USER_CONTENT_ROOT \
+    ROUNDY_USR_CONTENT_NORMAL \
+    ROUNDY_USR_CONTENT_ROOT \
     Roundy
 
   unfunction $0
