@@ -12,37 +12,42 @@ Roundy[root]=${0:A:h}
 #
 
 # Color definition for Command's Exit Status
-: ${ROUNDY_COLORS_FG_EXITSTATUS:=0}
-: ${ROUNDY_COLORS_BG_EXITSTATUS:=4}
+: ${ROUNDY_COLORS_BG_EXITSTATUS_OK:=4}
+: ${ROUNDY_COLORS_FG_EXITSTATUS_OK:=0}
+
+: ${ROUNDY_COLORS_BG_EXITSTATUS_NO:=1}
+: ${ROUNDY_COLORS_FG_EXITSTATUS_NO:=0}
+
 # Icon definition for Command's Exit Status
-: ${ROUNDY_EXITSTATUS_OK:=$'\uf058 '}
-: ${ROUNDY_EXITSTATUS_NO:=$'\uf057 '}
+: ${ROUNDY_EXITSTATUS_OK:="●"}
+: ${ROUNDY_EXITSTATUS_NO:="✖"}
 
 # Options and Color definition for Time Execution Command
-: ${ROUNDY_COLORS_FG_TEXC:=0}
 : ${ROUNDY_COLORS_BG_TEXC:=2}
+: ${ROUNDY_COLORS_FG_TEXC:=0}
 # Minimal time (in ms) for the Time Execution of Command is displayed in prompt
 : ${ROUNDY_TEXC_MIN_MS:=5}
 # Icon for the Time Execution of Command is displayed in prompt
-: ${ROUNDY_TEXC_ICON:="ﮫ"}
+: ${ROUNDY_TEXC_ICON:="▲"}
 
-# Color definition for Active user name
-: ${ROUNDY_COLORS_FG_USR:=7}
-: ${ROUNDY_COLORS_BG_USR:=0}
 # Options to override username info
 : ${ROUNDY_USR_CONTENT_NORMAL:=" %n "}
 : ${ROUNDY_USR_CONTENT_ROOT:=" %n "}
 
+# Color definition for Active user name
+: ${ROUNDY_COLORS_BG_USR:=8}
+: ${ROUNDY_COLORS_FG_USR:=255}
+
 # Color definition for Active directory name
-: ${ROUNDY_COLORS_FG_DIR:=4}
-: ${ROUNDY_COLORS_BG_DIR:=0}
+: ${ROUNDY_COLORS_BG_DIR:=8}
+: ${ROUNDY_COLORS_FG_DIR:=255}
 # Working Directory Info Mode
 # Valid choice are : "full", "short", or "dir-only"
 : ${ROUNDY_DIR_MODE:="dir-only"}
 
 # Color definition for Git info
-: ${ROUNDY_COLORS_FG_GITINFO:=0}
 : ${ROUNDY_COLORS_BG_GITINFO:=5}
+: ${ROUNDY_COLORS_FG_GITINFO:=0}
 
 # Option whether drawing a gap between a prompt
 : ${ROUNDY_PROMPT_HAS_GAP:=true}
@@ -126,19 +131,20 @@ roundy_prompt_left() {
   local p=" "
   local char_open=$'\ue0b6'
   local char_close=$'\ue0b4'
-  local exit_color="%(?|${ROUNDY_COLORS_BG_EXITSTATUS_OK}|${ROUNDY_COLORS_BG_EXITSTATUS_NO})"
+  local exit_color_bg="%(?|${ROUNDY_COLORS_BG_EXITSTATUS_OK}|${ROUNDY_COLORS_BG_EXITSTATUS_NO})"
+  local exit_color_fg="%(?|${ROUNDY_COLORS_FG_EXITSTATUS_OK}|${ROUNDY_COLORS_FG_EXITSTATUS_NO})"
 
-  p+="%F{${exit_color}}"
+  p+="%F{${exit_color_bg}}"
   p+="${char_open}"
-  p+="%K{${exit_color}}"
-  p+="%F{${ROUNDY_COLORS_FG_EXITSTATUS}}"
+  p+="%K{${exit_color_bg}}"
+  p+="%F{${exit_color_fg}}"
   p+="%{%(?|${ROUNDY_EXITSTATUS_OK}|${ROUNDY_EXITSTATUS_NO})%G%}"
   if [ -n "${Roundy[data_texc]}" ]; then
     p+="%K{${ROUNDY_COLORS_BG_TEXC}}"
   else
     p+="%K{${ROUNDY_COLORS_BG_DIR}}"
   fi
-  p+="%F{${exit_color}}"
+  p+="%F{${exit_color_bg}}"
   p+="${char_close}"
 
   if [ -n "${Roundy[data_texc]}" ]; then
@@ -274,19 +280,19 @@ roundy_plugin_unload() {
 
   unset \
     ROUNDY_COLORS_BG_DIR \
-    ROUNDY_COLORS_BG_EXITSTATUS \
-    ROUNDY_COLORS_BG_GITINFO \
-    ROUNDY_COLORS_BG_TEXC \
-    ROUNDY_COLORS_BG_USR \
     ROUNDY_COLORS_FG_DIR \
-    ROUNDY_COLORS_FG_EXITSTATUS \
+    ROUNDY_COLORS_BG_GITINFO \
     ROUNDY_COLORS_FG_GITINFO \
+    ROUNDY_COLORS_BG_TEXC \
     ROUNDY_COLORS_FG_TEXC \
+    ROUNDY_COLORS_BG_USR \
     ROUNDY_COLORS_FG_USR \
-    ROUNDY_EXITSTATUS_NO \
     ROUNDY_EXITSTATUS_OK \
+    ROUNDY_EXITSTATUS_NO \
     ROUNDY_COLORS_BG_EXITSTATUS_OK \
+    ROUNDY_COLORS_FG_EXITSTATUS_OK \
     ROUNDY_COLORS_BG_EXITSTATUS_NO \
+    ROUNDY_COLORS_FG_EXITSTATUS_NO \
     ROUNDY_EXITSTATUS_ICONFIX \
     ROUNDY_PROMPT_HAS_GAP \
     ROUNDY_TEXC_MIN_MS \
