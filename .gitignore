@@ -2,6 +2,8 @@
 *.zwc
 *.zwc.old
 
+.dev
+
 # Zsh completion-optimization dumpfile
 *zcompdump*
 
