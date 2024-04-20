@@ -14,33 +14,28 @@ Roundy[root]=${0:A:h}
 # Color definition for Command's Exit Status
 : ${ROUNDY_COLORS_BG_EXITSTATUS_OK:=4}
 : ${ROUNDY_COLORS_FG_EXITSTATUS_OK:=0}
-
 : ${ROUNDY_COLORS_BG_EXITSTATUS_NO:=1}
 : ${ROUNDY_COLORS_FG_EXITSTATUS_NO:=0}
-
 # Icon definition for Command's Exit Status
-: ${ROUNDY_EXITSTATUS_OK:="●"}
-: ${ROUNDY_EXITSTATUS_NO:="✖"}
+: ${ROUNDY_EXITSTATUS_OK:=$'\uf058 '}
+: ${ROUNDY_EXITSTATUS_NO:=$'\uf057 '}
 
 # Options and Color definition for Time Execution Command
 : ${ROUNDY_COLORS_BG_TEXC:=2}
 : ${ROUNDY_COLORS_FG_TEXC:=0}
 # Minimal time (in ms) for the Time Execution of Command is displayed in prompt
 : ${ROUNDY_TEXC_MIN_MS:=5}
-# Icon for the Time Execution of Command is displayed in prompt
 : ${ROUNDY_TEXC_ICON:="▲"}
-
-# Options to override username info
-: ${ROUNDY_USR_CONTENT_NORMAL:=" %n "}
-: ${ROUNDY_USR_CONTENT_ROOT:=" %n "}
 
 # Color definition for Active user name
 : ${ROUNDY_COLORS_BG_USR:=8}
 : ${ROUNDY_COLORS_FG_USR:=255}
-
+# Options to override username info
+: ${ROUNDY_USR_CONTENT_NORMAL:=" %n "}
+: ${ROUNDY_USR_CONTENT_ROOT:=" %n "}
 # Color definition for Active directory name
-: ${ROUNDY_COLORS_BG_DIR:=8}
 : ${ROUNDY_COLORS_FG_DIR:=255}
+: ${ROUNDY_COLORS_BG_DIR:=8}
 # Working Directory Info Mode
 # Valid choice are : "full", "short", or "dir-only"
 : ${ROUNDY_DIR_MODE:="dir-only"}
@@ -128,7 +123,7 @@ roundy_get_dir() {
 #
 
 roundy_prompt_left() {
-  local p=" "
+  local p
   local char_open=$'\ue0b6'
   local char_close=$'\ue0b4'
   local exit_color_bg="%(?|${ROUNDY_COLORS_BG_EXITSTATUS_OK}|${ROUNDY_COLORS_BG_EXITSTATUS_NO})"
@@ -138,7 +133,7 @@ roundy_prompt_left() {
   p+="${char_open}"
   p+="%K{${exit_color_bg}}"
   p+="%F{${exit_color_fg}}"
-  p+="%{%(?|${ROUNDY_EXITSTATUS_OK}|${ROUNDY_EXITSTATUS_NO})%G%}"
+  p+="%{%(?|${ROUNDY_EXITSTATUS_OK}|${ROUNDY_EXITSTATUS_NO})%2G%}"
   if [ -n "${Roundy[data_texc]}" ]; then
     p+="%K{${ROUNDY_COLORS_BG_TEXC}}"
   else
@@ -211,6 +206,16 @@ roundy_draw_gap() {
 }
 
 
+# Callback functions for async worker
+roundy_async_callback() {
+  # Set output ($3) callback based on method name ($1)
+  Roundy[data_${1/roundy_get_/}]=$3
+
+  we needs to redraw the whole prompts :(
+  roundy_draw_prompts
+  zle && zle reset-prompt
+}
+
 roundy_preexec() {
   # disable gap when clearing term
   [[ "$1" == (clear|reset) ]] && Roundy[draw_gap]=
@@ -267,16 +272,19 @@ roundy_plugin_unload() {
   add-zsh-hook -D precmd roundy_precmd
 
   unfunction \
+    roundy_async_callback \
     roundy_draw_gap \
     roundy_draw_prompts \
     roundy_prompt_left \
     roundy_prompt_right \
     roundy_get_dir \
     roundy_get_gitinfo \
-    roundy_get_txec \
+    roundy_get_texc \
     roundy_precmd \
     roundy_preexec \
     roundy_main
+
+    # roundy_get_txec \
 
   unset \
     ROUNDY_COLORS_BG_DIR \
