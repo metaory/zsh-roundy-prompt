@@ -1,11 +1,11 @@
 <div align=center>
-    <img alt="logo-of-roundy-theme" src="roundy.png" width="30%"><br><br>
+    <img alt="logo-of-roundy-theme" src=".github/assets/roundy.png" width="30%"><br><br>
     fast, cute, and-of-course, <i>roundy</i> prompt theme for zsh
 </div>
 
 # Preview
 
-![preview-of-roundy-theme](preview.png)
+![preview-of-roundy-theme](.github/assets/preview.png)
 
 > Using [tokyonight](https://github.com/folke/tokyonight.nvim) and [VictorMono](https://github.com/rubjo/victor-mono)
 
