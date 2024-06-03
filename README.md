@@ -7,7 +7,7 @@
 
 ![preview-of-roundy-theme](.github/assets/preview.png)
 
-> Using [tokyonight](https://github.com/folke/tokyonight.nvim) and [VictorMono](https://github.com/rubjo/victor-mono)
+> Using [hexocd-colorscheme](https://github.com/metaory/hexocd-colorscheme) and [Monaspace](https://monaspace.githubnext.com)
 
 # Required
 
@@ -20,7 +20,7 @@ To check whether your terminal ready to using this theme, use this command :
 echo -e '\ue0b6\ue0b4'
 ```
 
-if it returns a circle, then we can go to the next step 🥳
+If it returns a circle, then we can go to the next step 🥳
 
 # Installation
 
