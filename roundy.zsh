@@ -129,7 +129,7 @@ roundy_prompt_left() {
   local exit_color_bg="%(?|${ROUNDY_COLORS_BG_EXITSTATUS_OK}|${ROUNDY_COLORS_BG_EXITSTATUS_NO})"
   local exit_color_fg="%(?|${ROUNDY_COLORS_FG_EXITSTATUS_OK}|${ROUNDY_COLORS_FG_EXITSTATUS_NO})"
 
-  p+="%F{${exit_color_bg}}"
+  p+="%F{${exit_color_bg}} "
   p+="${char_open}"
   p+="%K{${exit_color_bg}}"
   p+="%F{${exit_color_fg}}"
@@ -168,22 +168,28 @@ roundy_prompt_right() {
   local char_open=$'\ue0b6'
   local char_close=$'\ue0b4'
 
-  p+="%F{${ROUNDY_COLORS_BG_USR}}"
+  local exit_color_bg="%(?|${ROUNDY_COLORS_BG_USR}|${ROUNDY_COLORS_BG_EXITSTATUS_NO})"
+  local exit_color_fg="%(?|${ROUNDY_COLORS_FG_USR}|${ROUNDY_COLORS_FG_EXITSTATUS_NO})"
+
+  p+="%F{${exit_color_bg}}"
   p+="${char_open}"
-  p+="%K{${ROUNDY_COLORS_BG_USR}}"
-  p+="%F{${ROUNDY_COLORS_FG_USR}}"
+
+  p+="%K{${exit_color_bg}}"
+  p+="%F{${exit_color_fg}}"
   p+="%(#.${ROUNDY_USR_CONTENT_ROOT}.${ROUNDY_USR_CONTENT_NORMAL})"
-  cl_close=${ROUNDY_COLORS_BG_USR}
+  p+="%(?..:%?)"
+  cl_close=${exit_color_bg}
 
   if [[ -n "${Roundy[data_gitinfo]}" ]]; then
-    p+="%K{${ROUNDY_COLORS_BG_USR}}"
-    p+="%F{${ROUNDY_COLORS_BG_GITINFO}}"
+    p+="%K{${exit_color_bg}}"
+    p+="%F{${ROUNDY_COLORS_BG_GITINFO}} "
     p+="${char_open}"
     p+="%K{${ROUNDY_COLORS_BG_GITINFO}}"
     p+="%F{${ROUNDY_COLORS_FG_GITINFO}}"
     p+="${Roundy[data_gitinfo]}"
     cl_close=${ROUNDY_COLORS_BG_GITINFO}
   fi
+
   p+="%k"
   p+="%F{${cl_close}}"
   p+="${char_close}"
