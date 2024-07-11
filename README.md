@@ -1,5 +1,5 @@
 <div align=center>
-    <img alt="logo-of-roundy-theme" src=".github/assets/roundy.png" width="30%"><br><br>
+    <img alt="logo-of-roundy-theme" src=".github/assets/roundy.png" width="60%"><br>
     fast, cute, and-of-course, <i>roundy</i> prompt theme for zsh
 </div>
 
@@ -64,8 +64,14 @@ ROUNDY_TEXC_ICON="▲"
 ROUNDY_TEXC_MIN_MS=5
 
 # Overriding username info
-ROUNDY_USER_CONTENT_NORMAL=" %n "
-ROUNDY_USER_CONTENT_ROOT=" %n "
+ROUNDY_USR_CONTENT_NORMAL=" %n "
+ROUNDY_USR_CONTENT_ROOT=" %n "
+
+# ROUNDY_USR_CONTENT_NORMAL='%B%i%b'
+# %B for starting bold
+# %b for ending bold
+# %i for current history event number
+# man zshmisc.1
 
 # Working Directory Info Mode
 # Valid choice are : "full", "short", or "dir-only"
@@ -100,8 +106,8 @@ ROUNDY_COLORS_BG_TEXC=2
 ROUNDY_COLORS_FG_TEXC=0
 
 # User Display
-ROUNDY_COLORS_BG_USER=8
-ROUNDY_COLORS_FG_USER=255
+ROUNDY_COLORS_BG_USR=8
+ROUNDY_COLORS_FG_USR=255
 
 # Directory Info
 ROUNDY_COLORS_BG_DIR=8
@@ -120,4 +126,4 @@ ROUNDY_COLORS_FG_GITINFO=0
 
 # License
 
-Copyright © 2023 [metaory](https://github.com/metaory)
+Copyright © 2023- [metaory](https://github.com/metaory)
