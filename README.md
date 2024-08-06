@@ -1,5 +1,5 @@
 <div align=center>
-    <img alt="logo-of-roundy-theme" src=".github/assets/roundy.png" width="60%"><br>
+    <img alt="logo-of-roundy-theme" src=".github/assets/roundy.png" width="80%"><br>
     fast, cute, and-of-course, <i>roundy</i> prompt theme for zsh
 </div>
 
