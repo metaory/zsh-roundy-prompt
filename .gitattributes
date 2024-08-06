@@ -1,1 +1,4 @@
-*.md   diff=markdown
+* text
+*.zsh diff=zsh      eol=lf
+*.md  diff=markdown eol=lf
+*.png binary
