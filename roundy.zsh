@@ -21,27 +21,27 @@ Roundy[root]=${0:A:h}
 : ${ROUNDY_EXITSTATUS_NO:=$'\uf057 '}
 
 # Options and Color definition for Time Execution Command
-: ${ROUNDY_COLORS_BG_TEXC:=2}
+: ${ROUNDY_COLORS_BG_TEXC:=3}
 : ${ROUNDY_COLORS_FG_TEXC:=0}
 # Minimal time (in ms) for the Time Execution of Command is displayed in prompt
-: ${ROUNDY_TEXC_MIN_MS:=5}
+: ${ROUNDY_TEXC_MIN_S:=4}
 : ${ROUNDY_TEXC_ICON:="▲"}
 
 # Color definition for Active user name
-: ${ROUNDY_COLORS_BG_USR:=8}
+: ${ROUNDY_COLORS_BG_USR:=5}
 : ${ROUNDY_COLORS_FG_USR:=255}
 # Options to override username info
 : ${ROUNDY_USR_CONTENT_NORMAL:=" %n "}
 : ${ROUNDY_USR_CONTENT_ROOT:=" %n "}
 # Color definition for Active directory name
 : ${ROUNDY_COLORS_FG_DIR:=255}
-: ${ROUNDY_COLORS_BG_DIR:=8}
+: ${ROUNDY_COLORS_BG_DIR:=4}
 # Working Directory Info Mode
 # Valid choice are : "full", "short", or "dir-only"
 : ${ROUNDY_DIR_MODE:="dir-only"}
 
 # Color definition for Git info
-: ${ROUNDY_COLORS_BG_GITINFO:=5}
+: ${ROUNDY_COLORS_BG_GITINFO:=7}
 : ${ROUNDY_COLORS_FG_GITINFO:=0}
 
 # Option whether drawing a gap between a prompt
@@ -71,9 +71,9 @@ roundy_get_gitinfo() {
 # Manage time of command execution
 #
 roundy_get_texc() {
-  (( ROUNDY_TEXC_MIN_MS )) && (( ${Roundy[raw_texc]} )) || return
+  (( ROUNDY_TEXC_MIN_S )) && (( ${Roundy[raw_texc]} )) || return
   local duration=$(( EPOCHSECONDS - ${Roundy[raw_texc]} ))
-  if (( duration >= ROUNDY_TEXC_MIN_MS )); then
+  if (( duration >= ROUNDY_TEXC_MIN_S )); then
     # Time converter from pure
     # https://github.com/sindresorhus/pure/blob/c031f6574af3f8afb43920e32ce02ee6d46ab0e9/pure.zsh#L31-L39
     local moment d h m s
@@ -309,7 +309,7 @@ roundy_plugin_unload() {
     ROUNDY_COLORS_FG_EXITSTATUS_NO \
     ROUNDY_EXITSTATUS_ICONFIX \
     ROUNDY_PROMPT_HAS_GAP \
-    ROUNDY_TEXC_MIN_MS \
+    ROUNDY_TEXC_MIN_S \
     ROUNDY_USR_CONTENT_NORMAL \
     ROUNDY_USR_CONTENT_ROOT \
     Roundy

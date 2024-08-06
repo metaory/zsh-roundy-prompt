@@ -52,34 +52,40 @@ Here's Default Options that currently available to override:
 # Note: If your custom symbol overlaps the background or didn't have enough width,
 #       you can add space at the end of your defined symbol.
 ROUNDY_EXITSTATUS_OK="●"
-# You can also using hex code like this
 ROUNDY_EXITSTATUS_NO="✖"
 
 # Icon definition for Time Execution
 ROUNDY_TEXC_ICON="▲"
-# ROUNDY_TEXC_ICON="ﮫ"
 
-# Minimal time (in ms) for the Time Execution of Command is displayed in prompt
+# Minimal time (in seconds) for the Time Execution of Command is displayed in prompt
 # Set to 0 to disable it
-ROUNDY_TEXC_MIN_MS=5
+ROUNDY_TEXC_MIN_S=4
 
-# Overriding username info
+# Overriding right prompt info
+
+# Any of zsh prompt escapes are valid
+# view possible values:
+man -P 'less -p "^SIMPLE PROMPT ESCAPES"' zshmisc
+
+# %n username
 ROUNDY_USR_CONTENT_NORMAL=" %n "
+
+# %B for starting boldface
+# %b for ending boldface
+# %i for current history event number
+ROUNDY_USR_CONTENT_NORMAL='%B%i%b'
+
+# For when in sudo session
 ROUNDY_USR_CONTENT_ROOT=" %n "
 
-# ROUNDY_USR_CONTENT_NORMAL='%B%i%b'
-# %B for starting bold
-# %b for ending bold
-# %i for current history event number
-# man zshmisc.1
 
 # Working Directory Info Mode
 # Valid choice are : "full", "short", or "dir-only"
 # Example Output
-#   full     : /etc/httpd/conf/extra
-#   short    : /e/h/c/extra
-#   dir-only : extra
-ROUNDY_DIR_MODE="dir-only"
+#   full     : /usr/share/awesome
+#   short    : /u/s/a
+#   dir-only : awesome
+ROUNDY_DIR_MODE="full"
 
 # Whether drawing a gap between a prompt
 ROUNDY_PROMPT_HAS_GAP=true
@@ -101,21 +107,25 @@ ROUNDY_COLORS_FG_EXITSTATUS_OK=0
 ROUNDY_COLORS_BG_EXITSTATUS_NO=1
 ROUNDY_COLORS_FG_EXITSTATUS_NO=0
 
+# You can also use color name
+
 # Time Execution of Command
-ROUNDY_COLORS_BG_TEXC=2
+ROUNDY_COLORS_BG_TEXC=yellow
 ROUNDY_COLORS_FG_TEXC=0
 
-# User Display
-ROUNDY_COLORS_BG_USR=8
+# Right Prompt Display
+ROUNDY_COLORS_BG_USR=5
 ROUNDY_COLORS_FG_USR=255
 
 # Directory Info
-ROUNDY_COLORS_BG_DIR=8
+ROUNDY_COLORS_BG_DIR=4
 ROUNDY_COLORS_FG_DIR=255
 
+# You can also use hex code
+
 # Git Info
-ROUNDY_COLORS_BG_GITINFO=5
-ROUNDY_COLORS_FG_GITINFO=0
+ROUNDY_COLORS_BG_GITINFO='#4422BB'
+ROUNDY_COLORS_FG_GITINFO=black
 ```
 
 # Acknowledgement
