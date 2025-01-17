@@ -1,139 +1,189 @@
 <div align=center>
-    <img alt="logo-of-roundy-theme" src=".github/assets/roundy.png" width="80%"><br>
-    fast, cute, and-of-course, <i>roundy</i> prompt theme for zsh
+  <h1>
+    ᖇ𐑴ꭎ𐐻𖩎ʎ
+    <img
+      valign="middle"
+      alt="logo-of-roundy-theme"
+      src=".github/assets/roundy.png"
+      height="80" />
+  </h1>
+  fast, cute, and of course, <em>roundy</em> prompt theme for zsh
 </div>
-
-# Preview
 
 ![preview-of-roundy-theme](.github/assets/preview.png)
 
-> Using [hexocd-colorscheme](https://github.com/metaory/hexocd-colorscheme) and [Monaspace](https://monaspace.githubnext.com)
+# Features
+
+- Fast and minimal
+- Git branch integration
+- Command execution time
+- Exit status indicator
+- Terminal title support
+- Plugin manager support
+- Configurable colors and icons
+- Path shortening modes
+
+# Install
+
+```sh
+# zinit
+zinit light metaory/zsh-roundy-prompt
+
+# antigen
+antigen bundle metaory/zsh-roundy-prompt
+
+# zplug
+zplug metaory/zsh-roundy-prompt
+
+# vanilla
+git clone https://github.com/metaory/zsh-roundy-prompt ~/.zsh/roundy
+echo 'source ~/.zsh/roundy/roundy.zsh' >> ~/.zshrc
+```
 
 # Required
 
-- [Nerd-patched](https://github.com/ryanoasis/nerd-fonts)'s Fonts
-- Terminal with unicode support.
+- Unicode support: `echo -e '\ue0b6\ue0b4'` should show rounded separators
+- Zsh 5.0 or newer
 
-To check whether your terminal ready to using this theme, use this command :
+# Config
 
-```sh
-echo -e '\ue0b6\ue0b4'
-```
+Theme colors and options can be configured in two ways:
 
-If it returns a circle, then we can go to the next step 🥳
-
-# Installation
-
-- zinit
-
+1. Before sourcing (for plugin managers):
 ```zsh
+# Set theme colors before loading
+typeset -gA RT=(
+  bg_ok 4    fg_ok 6    icon_ok •
+  bg_err 1   fg_err 0   icon_err ×
+  bg_dir 7   fg_dir 13  icon_time ⟳
+  bg_usr 4   fg_usr 13
+  bg_git 13  fg_git 7
+  bg_time 3  fg_time 7
+)
+
+# Then load the theme
 zinit light metaory/zsh-roundy-prompt
 ```
 
-- antigen
-
+2. After sourcing (for manual installation):
 ```zsh
-antigen bundle metaory/zsh-roundy-prompt
+# First source the theme
+source ~/.zsh/roundy/roundy.zsh
+
+# Then override colors and options
+typeset -gA RT=(...)
+R_MODE=full
+R_CODE=1
 ```
 
-- zplug
+Both approaches work, but plugin managers might handle the timing differently.
+Test which works better for your setup.
+
+# Theme Colors
 
 ```zsh
-zplug metaory/zsh-roundy-prompt, use:roundy.zsh, from:github, as:theme
-```
+# Theme colors (0-15 basic, 0-255 extended, black/red/..., #ff0000)
+typeset -gA RT=(
+  bg_ok 4    fg_ok 6    icon_ok •
+  bg_err 1   fg_err 0   icon_err ×
+  bg_dir 7   fg_dir 13  icon_time ⟳
+  bg_usr 4   fg_usr 13
+  bg_git 13  fg_git 7
+  bg_time 3  fg_time 7
+)
+
+# Hex colors example (hexocd theme)
+typeset -gA RT=(
+  bg_ok   '#2211AA'  fg_ok   '#11BB99'  icon_ok   •
+  bg_err  '#BB1122'  fg_err  '#110011'  icon_err  ×
+  bg_dir  '#440099'  fg_dir  '#FFCCFF'  icon_time ⟳
+  bg_usr  '#7766DD'  fg_usr  '#44DDEE'
+  bg_git  '#CC44BB'  fg_git  '#110022'
+  bg_time '#FF9922'  fg_time '#220022'
+)
 
 # Options
 
-Options in roundy are configured in a regular variable, you can override it on your `.zshrc`.
-Here's Default Options that currently available to override:
+```zsh
+# Default options and their effects
+: ${R_MODE:=dir-only}  # Path display mode:
+                       #   full     - show full path (/home/user/projects)
+                       #   short    - show shortened path (/h/u/p)
+                       #   dir-only - show only current directory (projects)
 
-```sh
-# Icon definition for Command's Exit Status
-# Note: If your custom symbol overlaps the background or didn't have enough width,
-#       you can add space at the end of your defined symbol.
-ROUNDY_EXITSTATUS_OK="●"
-ROUNDY_EXITSTATUS_NO="✖"
+: ${R_CODE:=0}         # Show exit code in right prompt:
+                       #   0 - hide exit code
+                       #   1 - show non-zero exit codes
 
-# Icon definition for Time Execution
-ROUNDY_TEXC_ICON="▲"
+: ${R_MIN:=4}          # Minimum seconds to show execution time:
+                       #   0 - disable time display
+                       #   n - show time for commands longer than n seconds
 
-# Minimal time (in seconds) for the Time Execution of Command is displayed in prompt
-# Set to 0 to disable it
-ROUNDY_TEXC_MIN_S=4
-
-# Overriding right prompt info
-
-# Any of zsh prompt escapes are valid
-# view possible values:
-man -P 'less -p "^SIMPLE PROMPT ESCAPES"' zshmisc
-
-# %n username
-ROUNDY_USR_CONTENT_NORMAL=" %n "
-
-# %B for starting boldface
-# %b for ending boldface
-# %i for current history event number
-ROUNDY_USR_CONTENT_NORMAL='%B%i%b'
-
-# For when in sudo session
-ROUNDY_USR_CONTENT_ROOT=" %n "
-
-
-# Working Directory Info Mode
-# Valid choice are : "full", "short", or "dir-only"
-# Example Output
-#   full     : /usr/share/awesome
-#   short    : /u/s/a
-#   dir-only : awesome
-ROUNDY_DIR_MODE="full"
-
-# Whether drawing a gap between a prompt
-ROUNDY_PROMPT_HAS_GAP=true
+: ${R_USR:=%n}         # Username format in prompt:
+                       #   %n - username
+                       #   %m - hostname
+                       #   %n@%m - username@hostname
 ```
 
-## Colors
+You can override these in your `.zshrc` after sourcing the theme:
 
-By nature of Zsh, colors can be specified using :
-
-- a decimal integer (0-15, or 0-255 if `$TERM` supported)
-- alias of the eight colors provided by zsh
-- or, as a regular #FFFFFF color hex (if `$TERM` supported, or with the help of `zsh/nearcolor` module)
-
-```sh
-# Command Exit Status
-ROUNDY_COLORS_BG_EXITSTATUS_OK=4
-ROUNDY_COLORS_FG_EXITSTATUS_OK=0
-
-ROUNDY_COLORS_BG_EXITSTATUS_NO=1
-ROUNDY_COLORS_FG_EXITSTATUS_NO=0
-
-# You can also use color name
-
-# Time Execution of Command
-ROUNDY_COLORS_BG_TEXC=yellow
-ROUNDY_COLORS_FG_TEXC=0
-
-# Right Prompt Display
-ROUNDY_COLORS_BG_USR=5
-ROUNDY_COLORS_FG_USR=255
-
-# Directory Info
-ROUNDY_COLORS_BG_DIR=4
-ROUNDY_COLORS_FG_DIR=255
-
-# You can also use hex code
-
-# Git Info
-ROUNDY_COLORS_BG_GITINFO='#4422BB'
-ROUNDY_COLORS_FG_GITINFO=black
+```zsh
+source ~/.zsh/roundy/roundy.zsh
+R_MODE=full          # show full path
+R_CODE=1             # show exit codes
+R_MIN=2              # show time after 2s
+R_USR='%n@%m'        # show user@host
 ```
 
-# Acknowledgement
+# Path Modes
 
-- Forked from [nullxception/roundy](https://github.com/nullxception/roundy)
-- Inspired by [Harry Elric](https://github.com/owl4ce)'s [Joyful Desktop v3](https://github.com/owl4ce/dotfiles/tree/3.0) prompt
-- [ryanoasis](https://github.com/ryanoasis)'s [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) for half-circle and most of the awesome additional glyphs on Nerd Fonts
+The prompt supports three path display modes:
+
+```zsh
+R_MODE=full     # /home/user/projects/roundy
+R_MODE=short    # /h/u/p/roundy
+R_MODE=dir-only # roundy
+```
+
+# Format
+
+Prompt supports [zsh prompt expansion](https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html):
+
+```zsh
+# Examples
+R_USR="%n"         # username
+R_USR="%m"         # hostname
+R_USR="%n@%m"      # username@hostname
+R_USR="%B%n%b"     # bold username
+R_USR="%F{1}%n%f"  # red username
+```
+
+# Time Format
+
+The time segment shows command execution duration when it exceeds `R_MIN` seconds:
+
+```zsh
+# Examples with R_MIN=4
+1d 2h 3m 4s        # 93784s
+2h 3m 4s           # 7384s
+3m 4s              # 184s
+4s                 # 4s
+```
+
+The time segment is hidden for:
+- Commands that run less than `R_MIN` seconds
+- When `R_MIN` is set to 0
+
+# Terminal Title
+
+The prompt automatically sets terminal title to:
+- Current command while executing
+- Current directory when idle
+
+# Acknowledgment
+
+Inspired by [Pure](https://github.com/sindresorhus/pure), [Spaceship](https://github.com/spaceship-prompt/spaceship-prompt), and [Powerline](https://github.com/powerline/powerline).
 
 # License
 
-Copyright © 2023- [metaory](https://github.com/metaory)
+[MIT](LICENSE)
