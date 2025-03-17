@@ -104,7 +104,6 @@ typeset -gA RT=(
 
 # Options
 
-```zsh
 # Default options and their effects
 : ${R_MODE:=dir-only}  # Path display mode:
                        #   full     - show full path (/home/user/projects)
